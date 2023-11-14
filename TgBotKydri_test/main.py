@@ -3,7 +3,8 @@ from aiogram import Bot, Dispatcher, types, executor
 from dotenv import load_dotenv
 import os
 
-from TgBotKydri_test.text import textStart, textGuide, text_vebinar, textGoVebinar
+from TgBotKydri_test.Edit_info.Edit_text import text_vebinar
+from TgBotKydri_test.text import textStart, textGuide, textOther1Day, textOther2Day
 
 load_dotenv()
 bot = Bot(os.getenv('TOKEN'), parse_mode="HTML")
@@ -31,15 +32,26 @@ async def callback_guide_start(call):
 
 @dp.callback_query_handler(lambda call: call.data == 'under_guide')
 async def callback_vebinar(call):
-    markup = types.InlineKeyboardMarkup(resize_keyboard=True)
-    markup.add(types.InlineKeyboardButton('🔥Я иду!', callback_data='go_vebinar'))
     await call.message.answer_photo(open('C:/Users/ilya_/PycharmProjects/pythonProject2/TgBotKydri_test/pictures'
-                                         '/веб27.09.png', 'rb'), caption=text_vebinar, reply_markup=markup)
+                                         '/веб27.09.png', 'rb'), caption=text_vebinar)
+
+    await asyncio.sleep(30)
+    await call.message.answer_photo(open(f'C:/Users/ilya_/PycharmProjects/pythonProject2/TgBotKydri_test/pictures'
+                                    f'/other_day.jpg', 'rb'), caption=textOther1Day)
+
+    await asyncio.sleep(60)
+    await call.message.answer_photo(open(f'C:/Users/ilya_/PycharmProjects/pythonProject2/TgBotKydri_test/pictures'
+                                         f'/other_2_day.jpg', 'rb'), caption=textOther2Day)
 
 
-@dp.callback_query_handler(lambda call: call.data == 'go_vebinar')
-async def callback_vebinar(call):
-    await call.message.answer(textGoVebinar)
+
+
+
+#@dp.callback_query_handler(lambda call: call.data == 'go_vebinar')
+#async def callback_vebinar(call):
+   # await call.message.answer(textGoVebinar)
+
+
 
 
 if __name__ == '__main__':
